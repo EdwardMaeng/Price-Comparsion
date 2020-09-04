@@ -17,10 +17,10 @@ headers = {
         'accept-language': 'en-GB,en-US;q=0.9,en;q=0.8',
     }
 
-class Scraping():
+class Scraping_Amazon():
 
-    def __init__(self, url):
-        self.URL = url()
+    def __init__(self, item):
+        self.URL = url() # change This
         self.name_container = []
         self.price_container = []
         self.imagelink_container = []
@@ -36,6 +36,8 @@ class Scraping():
         self.soup = BeautifulSoup(self.page.content, 'html.parser')
 
     def scrap(self):
+        # temp = self.soup.findAll("div", {"data-index"})
+        # anotherTemp = temp.findAll()
         self.name_container += self.soup.findAll("span", {"class":"a-size-medium a-color-base a-text-normal"})
         self.price_container += self.soup.findAll("span", {"class":"a-price-whole"})
         #self.price_container += self.soup.findAll("span", {"class":"a-offscreen"})
