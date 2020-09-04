@@ -3,6 +3,10 @@ from searching import giveURL
 from bs4 import BeautifulSoup
 from re import sub
 
+# Find what they are using
+# Then, Store those into dictionary / List
+companyPreferences = {"amazon":"a-size-medium a-color-base a-text-normal", }
+
 headers = {
         'authority': 'www.amazon.com',
         'pragma': 'no-cache',
