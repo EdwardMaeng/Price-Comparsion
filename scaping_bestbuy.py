@@ -55,8 +55,10 @@ class Scraping_BestBuy():
     def convert_price(self):
         print("Initiating convert_price()")
         new_p, d_name, i = [], [], 0
-        for p in self.price_container:
-            temp = p.get_text()
+       if len(self.price_container) <= len(self.name_container): l = len(self.price_container)
+        else: l = len(self.name_container)
+        for i in range(l):
+            temp = self.price_container[i].get_text()
             if not ('to' in temp or 'Tap' in temp):
                 new_p += [Decimal(sub(r'[^\d.]', '', temp))]
         return new_p, d_name
@@ -67,7 +69,7 @@ class Scraping_BestBuy():
             print("Name: ", self.name_container[i].get_text())
             print("Price: $", self.price_container[i].get_text())
 
-s = Scraping_BestBuy("camera")
-s.scrap()
-name, price = s.find_low_price_index()
-print("Name:", name, "--> $", price)
+# s = Scraping_BestBuy("camera")
+# s.scrap()
+# name, price = s.find_low_price_index()
+# print("Name:", name, "--> $", price)
