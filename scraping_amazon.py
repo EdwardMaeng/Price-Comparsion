@@ -59,9 +59,6 @@ class Scraping_Amazon():
         for i in range(len(self.name_container)):
             print("Name: ", self.name_container[i].get_text())
             print("Price: $", self.price_container[i].get_text())
-    
-    #def __repr__():
-    #def __str__():
 
 s = Scraping(giveURL)
 s.scrap()

@@ -43,28 +43,31 @@ class Scraping_BestBuy():
         for price in self.price_container:
             print("Item Price: ", price)
 
-        print(len(self.name_container))
-        print(len(self.price_container))       
+        #print(len(self.name_container))
+        #print(len(self.price_container))       
 
-    #def find_low_prices(self):
+    def find_low_price_index(self):
+        temp_p, temp_n = self.convert_price()
+        price = min(temp_p)
+        minpos = temp_p.index(price)
+        return self.name_container[minpos].get_text(), price
             
     def convert_price(self):
         print("Initiating convert_price()")
-        for p in self.price_container[:len(self.name_container)]:
-            converted_price = float(p.get_text())
-            self.price_container.remove(p)
-            self.price_container.append(converted_price)
+        new_p, d_name, i = [], [], 0
+        for p in self.price_container:
+            temp = p.get_text()
+            if not ('to' in temp or 'Tap' in temp):
+                new_p += [Decimal(sub(r'[^\d.]', '', temp))]
+        return new_p, d_name
     
     def print(self):
         print("Initiating print()")
         for i in range(len(self.name_container)):
             print("Name: ", self.name_container[i].get_text())
             print("Price: $", self.price_container[i].get_text())
-    
-    #def __repr__():
-    #def __str__():
 
 s = Scraping_BestBuy("camera")
 s.scrap()
-s.convert_price()
-s.print()
+name, price = s.find_low_price_index()
+print("Name:", name, "--> $", price)
