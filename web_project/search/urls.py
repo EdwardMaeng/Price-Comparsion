@@ -1,5 +1,7 @@
 from django.urls import path
 from search import views
 urlpatterns = [
-    path("search", views.hello_there, name="hello_there"),
+    path("", views.home, name="home"),
+    path("search", views.search, name="search"),
+    path("result/<product>", views.result, name="result")
 ]
