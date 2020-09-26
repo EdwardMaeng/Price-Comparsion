@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Eazy Price Finder</title>
-        {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'search/result.css' %}" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karla">
-    </head>
-    <body>
-        <strong>Hello there, {{ product }}!</strong>
-    </body>
-</html>
+{% block title %}{{ "ReSuLt" }}{% endblock %}
+
+{% block content %}
+<h1>{{ product }}</h1>
+
+{% for story in lists %}
+<h2>{{ story }}</h2>
+{% endfor %}
+
+{% endblock %}

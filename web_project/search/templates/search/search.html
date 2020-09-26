@@ -6,6 +6,13 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'search/search.css' %}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karla">
+    <script>
+        function newLink() {
+            productName = document.getElementById("search").value;
+            totalUrl = "http://127.0.0.1:8000/result/" + productName; 
+            window.open(totalUrl, "__self")
+        };
+    </script>
 </head>
 
 <body>
@@ -27,7 +34,8 @@
                     <input id="search" type="text" placeholder="What are you looking for?" />
                 </div>
                 <div class="input-field second-wrap">
-                    <button class="btn-search" type="button">SEARCH</button>
+                            <button class="btn-search" type="submit" onclick="newLink()">SEARCH</button>
+                    </form>
                 </div>
             </div>
         </form>

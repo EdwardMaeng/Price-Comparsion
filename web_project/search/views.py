@@ -15,12 +15,13 @@ def search(request):
     )
 
 def result(request, product):
-    
-
+    # Run ALL Scraping in here
+    lists = ["HELLO", "My", "Name", "is", "Yohan", "Kim"]
     return render(
         request,
         'search/result.html', 
         {
-            'product': product
+            'product': product,
+            'lists': lists,
         }
     )

@@ -22,6 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'p52a&_tsz=vw7um7e^^(mcf=rzdgnylx2#r92l_fe*x)tloiu7'
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
