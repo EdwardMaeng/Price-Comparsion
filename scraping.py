@@ -1,33 +1,40 @@
 from scraping_ebay import Scraping_eBay
 from scraping_walmart import Scraping_walmart
-#from scraping_bestbuy import Scraping_BestBuy
+from scraping_bestbuy import Scraping_BestBuy
 import searching
 
-def Scraping():
-    item = searching.giveURL()
-    ebay = Scraping_eBay(item)
-    walmart = Scraping_walmart(item)
-    #bestbuy = Scraping_bestbuy(item)
+item = searching.giveURL()
+ebay = Scraping_eBay(item)
+walmart = Scraping_walmart(item)
+bestbuy = Scraping_BestBuy(item)
+ebay.scrap()
+walmart.scrap()
+bestbuy.scrap()
 
-    ebay.scrap()
-    walmart.scrap()
-    #bestbuy.scrap()
+def scrap_ebay():
+    name, price, image, item = ebay.find_low_price_index()
+    print("From eBay --> Name:", name)
+    print("$", price)
+    print("Image:", image)
+    print("Item:", item)
+    return name, price, image, item
 
-    name1, price1 = ebay.find_low_price_index()
-    name2, price2 = walmart.find_low_price_index()
-    #name3, price3 += bestbuy.find_low_price_index()
+def scrap_walmart():
+    name, price, image, item = walmart.find_low_price_index()
+    print("From Walmart --> Name:", name)
+    print("$", price)
+    print("Image:", image)
+    print("Item:", item)
+    return name, price, image, item
 
-    min_price = min(price1, price2)
+def scarp_bestbuy():
+    name, price, image, item = bestbuy.find_low_price_index()
+    print("From BestBuy --> Name:", name)
+    print("$", price)
+    print("Image:", image)
+    print("Item:", item)
+    return name, price, image, item
 
-    if min_price == price1:
-        print("From eBay --> Name:", name1, "    $", price1)
-        return 'eBay', name1, price1
-    elif min_price == price2:
-        print("From Walmart --> Name:", name2, "    $", price2)
-        return 'Walmart', name2, price2
-    # elif min_price == price3:
-    #     print("From BestBuy --> Name:", name3, "    $", price3)
-    #     return 'BestBuy', name3, price3
-    else:
-        print("No Product Found")
-        return
+scrap_ebay()
+scrap_walmart()
+scarp_bestbuy()

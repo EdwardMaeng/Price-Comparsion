@@ -15,6 +15,7 @@ class Scraping_eBay():
         self.name_container = []
         self.price_container = []
         self.imagelink_container = []
+        self.itemlink_container = []
         self.headers = headers
         # make sure the request gets sent properly
         print("Downloading %s"%self.URL)
@@ -23,13 +24,17 @@ class Scraping_eBay():
 
     def scrap(self):
         self.name_container += self.soup.findAll("h3", {"class":"s-item__title"})
-        self.price_container += self.soup.findAll("span", {"class":"s-item__price"})     
+        self.price_container += self.soup.findAll("span", {"class":"s-item__price"})   
+        for link in self.soup.findAll("img", {"class":"s-item__image-img"}):
+            self.imagelink_container.append(link.get('src'))
+        for link in self.soup.findAll("a", {"class": "s-item__link"}):
+            self.itemlink_container.append(link.get('href'))
 
     def find_low_price_index(self):
         temp_p, temp_n = self.convert_price()
         price = min(temp_p)
         minpos = temp_p.index(price)
-        return self.name_container[minpos].get_text(), price
+        return self.name_container[minpos].get_text(), price, self.imagelink_container[minpos], self.itemlink_container[minpos]
             
     def convert_price(self):
         print("Initiating convert_price()")
@@ -47,9 +52,11 @@ class Scraping_eBay():
         for i in range(len(self.name_container)):
             print("Name: ", self.name_container[i].get_text())
             print("Price: $", self.price_container[i].get_text())
+            print("Image Link:", self.imagelink_container[i])
+            print("Item Link:", self.itemlink_container[i])
 
 
 # s = Scraping_eBay("camera")
 # s.scrap()
-# name, price = s.find_low_price_index()
-# print("Name:", name, "--> $", price)
+#name, price, image, item = s.find_low_price_index()
+#print("Name:", name, "--> $", price)

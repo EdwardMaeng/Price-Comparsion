@@ -16,6 +16,7 @@ class Scraping_walmart():
         self.name_container = []
         self.price_container = []
         self.imagelink_container = []
+        self.itemlink_container = []
         self.headers = headers
         # make sure the request gets sent properly
         print("Downloading %s"%self.URL)
@@ -23,7 +24,6 @@ class Scraping_walmart():
         self.soup = BeautifulSoup(self.page.content, 'html.parser')
 
     def scrap(self):
-        #<a lang="en" class="product-title-link line-clamp line-clamp-2 truncate-title" href="/ip/Google-Nest-Cam-Indoor-Security-Camera/45806610?wpa_bd=&amp;wpa_pg_seller_id=F55CDC31AB754BB68FE0B39041159D63&amp;wpa_ref_id=wpaqs:Pp4qgNm1k6VYKphGITh56S5j7e2ViRC6_a_TfT3h2J1IYPgQAsp6jmUmkwzZFwGZ9YYJoTUwhNTE3zkULQJUAzpPlxTnDpEyocuGj-Jwrk5zaQJ3QukQQmHt1JtrtfDAqupKPlht7AoCKZJRSSjHP1TO1FH-6g1FwzlyFWqRe6mDzHMqqhtpph_n-Gbvy_bQgzKxX13XFAzlUPETBi4QwednQZid4Z2LTO0Snc3OcZiVLVVEMhSWWTg38lLN_op8&amp;wpa_tag=&amp;wpa_aux_info=&amp;wpa_pos=1&amp;wpa_plmt=1145x1145_T-C-IG_TI_1-2_HL-INGRID-GRID-NY&amp;wpa_aduid=94ff67e6-3d2d-47d7-a3b4-d3a3fbffcd0e&amp;wpa_pg=search&amp;wpa_pg_id=camera&amp;wpa_st=camera&amp;wpa_tax=3944_133277&amp;wpa_bucket=__bkt__" tabindex="-1" data-type="itemTitles"><span>Google Nest Cam Indoor Security <mark>Camera</mark></span></a>
         temp = self.soup.findAll("a", {"class":"product-title-link line-clamp line-clamp-2 truncate-title"})
         temp_list = []
         for h4 in temp:
@@ -31,14 +31,17 @@ class Scraping_walmart():
         for nc in temp_list:
             if not self.item in nc:
                 self.name_container.append(nc)
-        #<span class="price-characteristic">129</span>
-        self.price_container += self.soup.findAll("span", {"class":"price-characteristic"})     
+        self.price_container += self.soup.findAll("span", {"class":"price-characteristic"})
+        for link in self.soup.findAll("img", {"data-pnodetype":"item-pimg"}):
+            self.imagelink_container.append(link.get('data-image-src'))
+        for link in self.soup.findAll("a", {"lang": "en"}):
+            self.itemlink_container.append(link.get('href'))     
 
     def find_low_price_index(self):
         temp_p, temp_n = self.convert_price()
         price = min(temp_p)
         minpos = temp_p.index(price)
-        return self.name_container[minpos], price
+        return self.name_container[minpos], price, self.imagelink_container[minpos], self.itemlink_container[minpos]
             
     def convert_price(self):
         print("Initiating convert_price()")
@@ -53,13 +56,14 @@ class Scraping_walmart():
     
     def print(self):
         print("Initiating print()")
-        print(len(self.name_container), len(self.price_container))
         for i in range(len(self.price_container)):
             print("Name: ", self.name_container[i])
             print("Price: $", self.price_container[i].get_text())
+            print("Image Link:", self.imagelink_container[i])
+            print("Item Link:", self.itemlink_container[i])
 
 
 # s = Scraping_walmart("camera")
 # s.scrap()
-# name, price = s.find_low_price_index()
+# name, price, image, item = s.find_low_price_index()
 # print("Name:", name, "--> $", price)
