@@ -3,11 +3,11 @@ from django.http import HttpResponse
 from datetime import datetime
 import re
 import urllib
+import sys
+sys.path.append("..")
+import scraping
 
 # Create your views here.
-def home(request):
-    return HttpResponse("Hello, Django!")
-
 def search(request):
     return render(
         request,
@@ -15,13 +15,12 @@ def search(request):
     )
 
 def result(request, product):
-    # Run ALL Scraping in here
-    lists = ["HELLO", "My", "Name", "is", "Yohan", "Kim"]
+    scraping_object = scraping.scraping(product)
+    items = scraping_object.get_item_list
     return render(
         request,
         'search/result.html', 
         {
-            'product': product,
-            'lists': lists,
+            'item': items,
         }
     )

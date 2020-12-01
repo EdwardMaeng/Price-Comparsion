@@ -55,3 +55,5 @@ class scraping():
     
     def get_item_list(self):
         return self._item_list
+
+myScrap = scraping("tv")

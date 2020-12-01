@@ -1,5 +1,5 @@
 import requests, time
-from searching import giveURL
+
 from bs4 import BeautifulSoup
 from re import sub
 from decimal import Decimal
